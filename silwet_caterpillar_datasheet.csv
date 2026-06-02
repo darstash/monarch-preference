@@ -1,0 +1,8 @@
+caterpillar_id,date_assay,time_assay_start,time_assay_end,start_water_weight,start_silwet_weight,end_water_weight,end_silwet_weight,left_right,cat_sw_lr,end_water_area,end_silwet_area,notes
+m_sw_1,07/05/2025,5:49 PM,9:49 AM,0.03742,0.05114,0.03706,0.05469,"facing away, silwet to my left",right,1.78,1.766,caterpillar died before assay end
+m_sw_2,07/05/2025,5:52 PM,9:58 AM,0.02871,0.03361,0.02289,0.02701,"facing away, silwet to my right",left,1.36,1.416,
+m_sw_3,07/05/2025,5:54 PM,10:01 AM,0.0333,0.02873,0.03059,0.00569,"facing away, silwet to my left",right,1.564,0.176,
+m_sw_4,07/05/2025,5:56 PM,10:05 AM,0.03095,0.03259,0.02578,0.03266,"facing away, silwet to my right",left,1.407,1.771,
+m_sw_5,07/05/2025,6:00 PM,10:08 AM,0.05604,0.03721,0.05948,0.0148,"facing away, silwet to my left",right,1.704,0.383,
+m_sw_6,07/05/2025,6:02 PM,10:02 AM,0.02962,0.02957,0.03494,0.02664,"facing away, silwet to my right",left,1.795,1.561,
+m_sw_7,07/06/2025,4:56 PM,9:06 AM,0.03129,0.03196,0.01182,0.02273,"facing away, silwet to my left",right,0.67,1.323,

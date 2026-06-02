@@ -1,0 +1,21 @@
+species,caterpillar_id,food_treatment,disc_weight,setup_date,date_hatched,date_assay,time_assay_start,time_assay_end,start_control_weight,start_pesticide_weight,end_control_weight,end_pesticide_weight,left_right,cat_p_lr,control_area_remaining,pesticide_area_remaining,notes
+danaus_plexippus,m_c_1,control,0.03275,2025-06-24,2025-06-26,2025-06-29,8:36 PM,12:31 PM,0.02121,0.02086,0.00038,0.01662,"facing away, P to right",left,0.03,1.436,
+danaus_plexippus,m_c_2,control,0.02897,2025-06-24,2025-06-26,2025-06-29,8:06 PM,11:56 AM,0.02096,0.02172,0.01755,0.00944,"facing away, P to left",right,1.649,0.764,
+danaus_plexippus,m_p_1,pesticide,0.02787,2025-06-24,2025-06-26,2025-06-29,8:44 PM,12:34 PM,0.02099,0.02203,0.00025,0.01508,"facing away, P to right",left,0.03,1.331,
+danaus_plexippus,m_p_2,pesticide,0.02808,2025-06-24,2025-06-26,2025-06-29,5:08 PM,9:08 PM,0.02277,0.0223,0.01949,0.01577,"facing away, P to left",right,1.624,1.338,
+danaus_plexippus,m_c_3,control,0.03343,2025-06-26,2025-06-29,2025-07-02,5:08 PM,9:08 AM,0.01745,0.02255,0.02215,0.02577,"facing away, P to right",left,1.549,1.65,
+danaus_plexippus,m_c_4,control,0.04613,2025-06-26,2025-06-29,2025-07-02,10:11 AM,2:13 AM,0.02759,0.03833,0.031,0.03472,"facing away, P to left",right,1.822,1.46,
+danaus_plexippus,m_c_5,control,0.03099,2025-06-26,2025-06-28,2025-07-02,10:05 AM,2:11 AM,0.02758,0.02589,0.00924,0.03043,"facing away, P to right",left,0.313,1.771,
+danaus_plexippus,m_c_6,control,0.03054,2025-06-26,2025-06-28,2025-07-02,5:25 PM,9:25 AM,0.02229,0.01305,0.02247,0.01645,"facing away, P to left",right,1.503,1.18,
+danaus_plexippus,m_c_7,control,0.03202,2025-06-26,2025-06-29,2025-07-02,10:03 AM,2:09 AM,0.0255,0.02914,0.00721,0.03567,"facing away, P to right",left,0.386,1.775,
+danaus_plexippus,m_c_8,control,0.02953,2025-06-26,2025-06-29,2025-07-03,5:14 PM,9:14 AM,0.02592,0.02389,0.03171,0.03746,"facing away, P to left",right,1.298,1.885,ended first feeding early due to mold
+danaus_plexippus,m_c_9,control,0.02912,2025-06-26,2025-06-29,2025-07-03,5:13 PM,9:13 AM,0.02368,0.02188,0.01774,0.04126,"facing away, P to right",left,1.122,1.869,ended first feeding early due to mold
+danaus_plexippus,m_c_10,control,0.03175,2025-06-26,2025-06-29,2025-07-02,10:08 AM,2:15 AM,0.02595,0.02724,0.03437,0.02576,"facing away, P to left",right,1.867,1.478,
+danaus_plexippus,m_p_3,pesticide,0.02981,2025-06-26,2025-06-28,2025-07-02,5:21 PM,9:21 AM,0.02391,0.02287,0.01965,0.0305,"facing away, P to right",left,1.33,1.876,ended first feeding early due to mold
+danaus_plexippus,m_p_4,pesticide,0.02874,2025-06-26,2025-06-29,2025-07-02,5:19 PM,9:19 AM,0.02218,0.02002,0.02784,0.02424,"facing away, P to left",right,1.831,1.096,ended first feeding early due to mold
+danaus_plexippus,m_p_5,pesticide,0.02977,2025-06-26,2025-06-28,2025-07-02,10:00 AM,2:00 AM,0.02737,0.02552,0.01486,0.03253,"facing away, P to right",left,0.711,1.811,
+danaus_plexippus,m_p_6,pesticide,0.03063,2025-06-26,2025-06-28,2025-07-02,10:01 AM,2:02 AM,0.02766,0.02479,0.03515,0.02563,"facing away, P to left",right,1.823,1.249,
+danaus_plexippus,m_p_7,pesticide,0.03492,2025-06-26,2025-06-29,2025-07-03,1:56 AM,5:56 PM,0.02335,0.01743,0.00669,0.02205,"facing away, P to right",left,0.39,1.705,
+danaus_plexippus,m_p_8,pesticide,0.03045,2025-06-26,2025-06-29,2025-07-03,5:17 PM,9:17 AM,0.02024,0.02201,0.02313,0.01472,"facing away, P to left",right,1.844,0.482,ended first feeding early due to mold
+danaus_plexippus,m_p_9,pesticide,0.02799,2025-06-26,2025-06-28,2025-07-03,5:11 PM,9:11 AM,0.02074,0.02232,0.01162,0.028,"facing away, P to right",left,0.72,1.857,ended first feeding early due to mold
+danaus_plexippus,m_p_10,pesticide,0.0303,2025-06-26,2025-06-28,2025-07-02,5:12 PM,9:12 AM,0.02621,0.02115,0.02838,0.02878,"facing away, P to left",right,1.364,1.836,
