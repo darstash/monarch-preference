@@ -1,4 +1,4 @@
-https://doi.org/10.5281/zenodo.20574434
+https://doi.org/10.5281/zenodo.20574433
 # Introduction
 This repository contains R scripts that clean, analyze, and create figures for the manuscript "Monarch caterpillars do not prefer or avoid a common insecticide regardless of experience" submitted to Biology Letters. We fed monarch larvae either control or clothianidin-treatment milkweed as their intial diet and then performed a two-choice assay.
 
