@@ -79,7 +79,7 @@ cat_m_data <- cat_m_data %>%
   )
 
 # Beta regression is bounded at (0, 1) so need to transform data to prevent zeros and ones using the formula in the betareg documentation
-cat_m_data$pest_pref_trans <- (cat_m_data$pest_pref * (21 - 1) + 0.5) / 21
+cat_m_data$pest_pref_trans <- (cat_m_data$pest_pref * (20 - 1) + 0.5) / 20
 
 # Re-run model with transformed response value
 data_model_trans <- betareg(pest_pref_trans ~ cat_p_lr + food_treatment, data = cat_m_data, link = "logit")
