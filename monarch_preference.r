@@ -39,6 +39,8 @@ library(emmeans)
 library(betareg)
 library(car)
 library(ggpubr)
+library(glmmTMB)
+library(DHARMa)
 
 # Data cleaning ----
 
@@ -78,43 +80,25 @@ cat_m_data <- cat_m_data %>%
     right_eaten = (ifelse(cat_p_lr == "right", pest_area_eaten, cont_area_eaten))
   )
 
-# Beta regression is bounded at (0, 1) so need to transform data to prevent zeros and ones using the formula in the betareg documentation
-cat_m_data$pest_pref_trans <- (cat_m_data$pest_pref * (20 - 1) + 0.5) / 20
+# Use ordbeta to capture true 0s and 1s
+data_model_ord <- glmmTMB(pest_pref ~ cat_p_lr + food_treatment, data = cat_m_data, family = ordbeta)
+summary(data_model_ord)
+Anova(data_model_ord, type = "II")
+# Estimated marginal means on the response scale
+emm <- emmeans(data_model_ord, ~ food_treatment, type = "response", infer = T)
+emm
+# On the link scale, 0.5 = 0
+emm_link <- emmeans(data_model_ord, ~ food_treatment)
+test(emm_link, null = 0)
 
-# Re-run model with transformed response value
-data_model_trans <- betareg(pest_pref_trans ~ cat_p_lr + food_treatment, data = cat_m_data, link = "logit")
-
-summary(data_model_trans)
-
-# Check model diagnostics
-par(mfrow = c(3, 2))
-set.seed(123)
-plot(data_model_trans, which = 1:4, type = "pearson")
-plot(data_model_trans, which = 5, type = "deviance", sub.caption = "")
-plot(data_model_trans, which = 1, type = "deviance", sub.caption = "")
-
-# Try a log-log family to help with extremes
-data_model_log <- betareg(pest_pref_trans ~ cat_p_lr + food_treatment, data = cat_m_data, link = "loglog")
-summary(data_model_log)
-emm <- emmeans(data_model_log, pairwise ~ food_treatment, infer = T)
-summary(emm)
-Anova(data_model_log, type = "II") # can safely ignore these warnings
-em <- emmeans(data_model_log, ~ food_treatment)
-contrast(em, method = "identity", null = 0.5)
-
-# Check model diagnostics
-par(mfrow = c(3, 2))
-set.seed(123)
-plot(data_model_log, which = 1:4, type = "pearson")
-plot(data_model_log, which = 5, type = "deviance", sub.caption = "")
-plot(data_model_log, which = 1, type = "deviance", sub.caption = "")
-plot(data_model_log, which = 1:6)
-
-# Is the model improved with logit or log-log link functions?
-summary(data_model_trans)$pseudo.r.squared
-summary(data_model_log)$pseudo.r.squared # Better R-squared
-
-AIC(data_model_trans, data_model_log) # AIC not different (need at least a difference of 2)
+# Check model
+res <- simulateResiduals(data_model_ord)
+plot(res) # not a major concern the residual test is signif because the individual variables are NS
+testUniformity(res)
+testDispersion(res)
+testOutliers(res)
+plotResiduals(res, cat_m_data$cat_p_lr)
+plotResiduals(res, cat_m_data$food_treatment)
 
 # Calculating the difference between left and right leaf discs eaten for Shapiro-Wilk test.
 lr_diff <- cat_m_data$left_eaten - cat_m_data$right_eaten
@@ -142,6 +126,26 @@ shapiro.test(surf_diff) # go with normal distribution
 
 # t-test to determine if there is a significant difference between surfactant treated and water treated discs eaten.
 t.test(cat_surf_data$surf_area_eaten, cat_surf_data$water_area_eaten, paired = TRUE, alternative = "two.sided")
+
+## Leaf disc weight
+
+# Initial feeding treatment
+cat_m_data %>%
+  summarize(mean = mean(disc_weight),
+            min = min(disc_weight),
+            max = max(disc_weight))
+
+# Preference assay
+cat_m_data %>%
+  summarise(mean_value = mean(c(start_control_weight, start_pesticide_weight), na.rm = TRUE),
+            min_value = min(c(start_control_weight, start_pesticide_weight), na.rm = TRUE),
+            max_value = max(c(start_control_weight, start_pesticide_weight), na.rm = TRUE))
+
+# Silwet preference assay
+cat_surf_data %>%
+  summarise(mean_value = mean(c(start_water_weight, start_silwet_weight), na.rm = TRUE),
+            min_value = min(c(start_water_weight, start_silwet_weight), na.rm = TRUE),
+            max_value = max(c(start_water_weight, start_silwet_weight), na.rm = TRUE))
 
 # Plots ----
 
@@ -187,4 +191,10 @@ jpeg("plot_fig_s1.jpg", width = 5, height = 5, units = "in", res = 300)
 silwet.plot + labs(y = bquote('Area Eaten'~(cm^2))) +
   theme(legend.position = "none") +
   theme(text = element_text(size = 14))
+dev.off()
+
+##Figure S2 ----
+# Plot of preference assay model assumptions.
+jpeg("plot_fig_s2.jpg", width = 5, height = 5, units = "in", res = 300)
+testUniformity(res)
 dev.off()
