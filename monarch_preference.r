@@ -100,14 +100,10 @@ testOutliers(res)
 plotResiduals(res, cat_m_data$cat_p_lr)
 plotResiduals(res, cat_m_data$food_treatment)
 
-# Calculating the difference between left and right leaf discs eaten for Shapiro-Wilk test.
-lr_diff <- cat_m_data$left_eaten - cat_m_data$right_eaten
-
-# Shapiro-Wilk test to determine normality.
-shapiro.test(lr_diff) # go with normal distribution
-
-# t-test to determine if there is a significant difference between left and right discs eaten.
-t.test(cat_m_data$left_eaten, cat_m_data$right_eaten, paired = TRUE, alternative = "two.sided")
+# Wilcoxon signed-rank test due to small sample size
+wilcox.test(cat_m_data$lr_pref, mu = 0.5, alternative = "two.sided")
+median(cat_m_data$lr_pref)
+quantile(cat_m_data$lr_pref, c(0.25, 0.75))
 
 # Adding columns to the surfactant datasheet representing area eaten and preference index.
 cat_surf_data <- cat_surf_data %>%
@@ -118,14 +114,25 @@ cat_surf_data <- cat_surf_data %>%
     # Surfactant preference index using proportion.
     surf_pref = ((surf_area_eaten) / (water_area_eaten + surf_area_eaten)))
 
-# Calculating the difference between surfactant treated and water treated discs for a Shapiro-Wilk test.
-surf_diff <- cat_surf_data$surf_area_eaten - cat_surf_data$water_area_eaten
+# Wilcoxon signed-rank test due to small sample size
+wilcox.test(cat_surf_data$surf_pref, mu = 0.5, alternative = "two.sided")
+median(cat_surf_data$surf_pref)
+quantile(cat_surf_data$surf_pref, c(0.25, 0.75))
 
-# Shapiro-Wilk test to determine normality.
-shapiro.test(surf_diff) # go with normal distribution
+# Adding columns representing the area of each leaf disc eaten and the preference indices.
+cat_surf_data <- cat_surf_data %>%
+  mutate(
+    # Directional preference index using proportion.
+    lr_pref = ((ifelse(cat_sw_lr == "left", water_area_eaten, surf_area_eaten)) / (water_area_eaten + surf_area_eaten)),
+    # Area of left disc eaten.
+    left_eaten = (ifelse(cat_sw_lr == "left", surf_area_eaten, water_area_eaten)),
+    # Area of right disc eaten.
+    right_eaten = (ifelse(cat_sw_lr == "right", surf_area_eaten, water_area_eaten))
+  )
 
-# t-test to determine if there is a significant difference between surfactant treated and water treated discs eaten.
-t.test(cat_surf_data$surf_area_eaten, cat_surf_data$water_area_eaten, paired = TRUE, alternative = "two.sided")
+wilcox.test(cat_surf_data$lr_pref, mu = 0.5, alternative = "two.sided")
+median(cat_surf_data$surf_pref)
+quantile(cat_surf_data$surf_pref, c(0.25, 0.75))
 
 ## Leaf disc weight
 
@@ -149,7 +156,7 @@ cat_surf_data %>%
 
 # Plots ----
 
-## Figure 2 ----
+## Figure 2a ----
 # pdf("plot_fig_2.pdf", width = 5, height = 5)
 ggsave("plot_fig_2.tiff", width = 5, height = 5, units = "in", dpi = 600)
 cat_m_data %>%
@@ -164,7 +171,7 @@ cat_m_data %>%
   theme(text = element_text(size = 14))
 dev.off()
 
-## Figure 3 ----
+## Figure 2b ----
 # Plot of disc placement and area eaten.
 d <- data.frame(Left = cat_m_data$left_eaten, Right = cat_m_data$right_eaten)
 g <- ggpaired(d, cond1 = "Left", cond2 = "Right",
