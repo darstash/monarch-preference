@@ -85,11 +85,9 @@ data_model_ord <- glmmTMB(pest_pref ~ cat_p_lr + food_treatment, data = cat_m_da
 summary(data_model_ord)
 Anova(data_model_ord, type = "II")
 # Estimated marginal means on the response scale
-emm <- emmeans(data_model_ord, ~ food_treatment, type = "response", infer = T)
-emm
+emmeans(data_model_ord, ~ food_treatment, type = "response", infer = T)
 # On the link scale, 0.5 = 0
-emm_link <- emmeans(data_model_ord, ~ food_treatment)
-test(emm_link, null = 0)
+emmeans(data_model_ord, ~ food_treatment, infer = T, null = 0)
 
 # Check model
 res <- simulateResiduals(data_model_ord)
@@ -99,6 +97,17 @@ testDispersion(res)
 testOutliers(res)
 plotResiduals(res, cat_m_data$cat_p_lr)
 plotResiduals(res, cat_m_data$food_treatment)
+
+# Calculating the difference between control and pesticide leaf discs eaten
+mean(cat_m_data$cont_area_eaten - cat_m_data$pest_area_eaten)
+0.3225719 / 1.767145
+
+# Wilcoxon signed-rank test due to small sample size (double check, but stick with ordbeta results)
+wilcox.test(cat_m_data$pest_pref, mu = 0.5, alternative = "two.sided")
+
+# Calculating the difference between left and right leaf discs eaten
+mean(cat_m_data$right_eaten - cat_m_data$left_eaten)
+0.6918156 / 1.767145
 
 # Wilcoxon signed-rank test due to small sample size
 wilcox.test(cat_m_data$lr_pref, mu = 0.5, alternative = "two.sided")
@@ -133,6 +142,16 @@ cat_surf_data <- cat_surf_data %>%
 wilcox.test(cat_surf_data$lr_pref, mu = 0.5, alternative = "two.sided")
 median(cat_surf_data$surf_pref)
 quantile(cat_surf_data$surf_pref, c(0.25, 0.75))
+
+# Try ordbeta for left/right
+data_surf_ord <- glmmTMB(surf_pref ~ cat_sw_lr, data = cat_surf_data, family = ordbeta)
+summary(data_surf_ord)
+Anova(data_surf_ord, type = "II")
+emmeans(data_surf_ord, specs = ~ 1, type = "response", infer = T)
+emmeans(data_surf_ord, specs = ~ 1, infer = T)
+# Estimated marginal means on the response scale
+emmeans(data_surf_ord, ~ cat_sw_lr, type = "response", infer = T)
+emmeans(data_surf_ord, ~ cat_sw_lr, infer = T)
 
 ## Leaf disc weight
 
@@ -205,3 +224,4 @@ dev.off()
 jpeg("plot_fig_s2.jpg", width = 5, height = 5, units = "in", res = 300)
 testUniformity(res)
 dev.off()
+
