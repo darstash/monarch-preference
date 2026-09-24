@@ -1,0 +1,14 @@
+Variable name,Variable description,Measurement units,Variable type,Levels,Missing values
+caterpillar_id,Identification code for individual caterpillar,,categorical,,
+date_assay,Date of assay,date (mm/dd/yyyy),numerical,,
+time_assay_start,Time of assay start,time of day,numerical,,
+time_assay_end,Time of assay end,time of day,numerical,,
+start_water_weight,Initial weight of water-treated disc in assay,g,numerical,,
+start_silwet_weight,Initial weight of Silwet-treated disc in assay,g,numerical,,
+end_water_weight,Weight of water-treated disc after assay end,g,numerical,,
+end_silwet_weight,Weight of Silwet-treated disc after assay end,g,numerical,,
+left_right,Placement of Silwet disc with regard to person transferring caterpillar,,categorical,"facing away, silwet to my left; facing away, silwet to my right",
+cat_sw_lr,Placement of Silwet disc with regard to caterpillar,,categorical,"left, right",
+end_water_area,Remaining area of water-treated disc after assay end,cm^2,numerical,,
+end_silwet_area,Remaining area of Silwet-treated disc after assay end,cm^2,numerical,,
+notes,Notes,,character,,No value if no other notes
