@@ -6,7 +6,7 @@ This repository contains R scripts that clean, analyze, and create figures for t
 Download the data files and R script in one folder/directory.
 
 # Usage
-Analyses and figures were created using R version 4.4.1 (2024-06-14) (R Core Team 2021). For package versions see the header of monarch_preference.R
+Analyses and figures were created using R version 4.6.1 (2026-06-24) (R Core Team 2026). For package versions see the header of monarch_preference.R
 
 # Authorship
 Code was created by Cooper S. Pryor (pryor24k@mtholyoke.edu) and Ashley L. Darst (darstash@msu.edu). C.S.P. designed and conducted the experiments, collected the data, and wrote the first draft of the manuscript. A.L.D. aided in experimental design, revised the manuscript and code, helped interpret findings, and acted as the project supervisor.
