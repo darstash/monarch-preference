@@ -1,31 +1,38 @@
 # PROJECT: Monarch caterpillar preference
 # AUTHORS: Cooper Pryor & Ashley Darst
 # DATE: September 24, 2025
+# REVISED: September 24, 2026
 # PURPOSE: This script analyzes monarch caterpillar preference for pesticides after initial exposure, correcting for turning bias.
 
-# R version 4.4.1 (2024-06-14)
+# R version 4.6.1 (2026-06-24) -- "Happy Hop"
+# Platform: x86_64-apple-darwin20
+# Running under: macOS Sequoia 15.7.9
 
-# Package versions:
 # attached base packages:
 # [1] stats     graphics  grDevices utils     datasets  methods   base     
 # 
 # other attached packages:
-# [1] ggpubr_0.6.2    car_3.1-3       carData_3.0-5   betareg_3.2-4   emmeans_2.0.1   lubridate_1.9.4
-# [7] forcats_1.0.1   stringr_1.6.0   dplyr_1.1.4     purrr_1.2.1     readr_2.1.6     tidyr_1.3.2    
-# [13] tibble_3.3.1    ggplot2_4.0.1   tidyverse_2.0.0
+# [1] DHARMa_0.5.0    glmmTMB_1.1.14  ggpubr_1.0.0    car_3.1-5       carData_3.0-6   emmeans_2.0.3  
+# [7] lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0   dplyr_1.2.1     purrr_1.2.2     readr_2.2.0    
+# [13] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
 # 
 # loaded via a namespace (and not attached):
-# [1] sandwich_3.1-1     generics_0.1.4     rstatix_0.7.3      stringi_1.8.7      lattice_0.22-7    
-# [6] hms_1.1.4          magrittr_2.0.4     grid_4.4.1         estimability_1.5.1 timechange_0.3.0  
-# [11] RColorBrewer_1.1-3 mvtnorm_1.3-3      Matrix_1.7-4       backports_1.5.0    nnet_7.3-20       
-# [16] Formula_1.2-5      survival_3.8-6     multcomp_1.4-29    scales_1.4.0       TH.data_1.1-5     
-# [21] modeltools_0.2-24  codetools_0.2-20   abind_1.4-8        cli_3.6.5          rlang_1.1.7       
-# [26] splines_4.4.1      withr_3.0.2        flexmix_2.3-20     tools_4.4.1        tzdb_0.5.0        
-# [31] ggsignif_0.6.4     coda_0.19-4.1      broom_1.0.12       vctrs_0.7.1        R6_2.6.1          
-# [36] stats4_4.4.1       zoo_1.8-15         lifecycle_1.0.5    MASS_7.3-65        pkgconfig_2.0.3   
-# [41] pillar_1.11.1      gtable_0.3.6       glue_1.8.0         lmtest_0.9-40      tidyselect_1.2.1  
-# [46] rstudioapi_0.18.0  farver_2.1.2       xtable_1.8-4       labeling_0.4.3     compiler_4.4.1    
-# [51] S7_0.2.1
+# [1] tidyselect_1.2.1    farver_2.1.2        S7_0.2.2            fastmap_1.2.0       TH.data_1.1-5      
+# [6] promises_1.5.0      digest_0.6.39       mime_0.13           estimability_2.0.0  timechange_0.4.0   
+# [11] lifecycle_1.0.5     survival_3.8-6      magrittr_2.0.5      compiler_4.6.1      rlang_1.3.0        
+# [16] tools_4.6.1         ggsignif_0.6.4      labeling_0.4.3      plyr_1.8.9          RColorBrewer_1.1-3 
+# [21] gap.datasets_0.0.6  multcomp_1.4-31     abind_1.4-8         withr_3.0.3         numDeriv_2016.8-1.1
+# [26] grid_4.6.1          xtable_1.8-8        scales_1.4.0        iterators_1.0.14    MASS_7.3-65        
+# [31] cli_3.6.6           mvtnorm_1.4-2       ragg_1.5.2          reformulas_0.4.4    generics_0.1.4     
+# [36] otel_0.2.0          rstudioapi_0.19.0   tzdb_0.5.0          minqa_1.2.8         splines_4.6.1      
+# [41] parallel_4.6.1      vctrs_0.7.3         boot_1.3-32         Matrix_1.7-5        sandwich_3.1-2     
+# [46] hms_1.1.4           rstatix_1.0.0       qgam_2.0.0          Formula_1.2-5       systemfonts_1.3.2  
+# [51] foreach_1.5.2       gap_1.15.2          glue_1.8.1          nloptr_2.2.1        codetools_0.2-20   
+# [56] stringi_1.8.7       gtable_0.3.6        later_1.4.8         lme4_2.0-1          pillar_1.11.1      
+# [61] htmltools_0.5.9     R6_2.6.1            TMB_1.9.21          textshaping_1.0.5   Rdpack_2.6.6       
+# [66] doParallel_1.0.17   shiny_1.14.0        lattice_0.22-9      rbibutils_2.4.1     backports_1.5.1    
+# [71] broom_1.0.13        httpuv_1.6.17       Rcpp_1.1.2          nlme_3.1-169        mgcv_1.9-4         
+# [76] zoo_1.8-15          pkgconfig_2.0.3   
 
 # Read in data
 # Main caterpillar datasheet
@@ -36,7 +43,6 @@ cat_surf_data <- read.csv("silwet_caterpillar_datasheet.csv")
 # Load libraries
 library(tidyverse)
 library(emmeans)
-library(betareg)
 library(car)
 library(ggpubr)
 library(glmmTMB)
@@ -143,7 +149,7 @@ wilcox.test(cat_surf_data$lr_pref, mu = 0.5, alternative = "two.sided")
 median(cat_surf_data$surf_pref)
 quantile(cat_surf_data$surf_pref, c(0.25, 0.75))
 
-# Try ordbeta for left/right
+# Ordbeta for surfactant preference left/right
 data_surf_ord <- glmmTMB(surf_pref ~ cat_sw_lr, data = cat_surf_data, family = ordbeta)
 summary(data_surf_ord)
 Anova(data_surf_ord, type = "II")
@@ -179,7 +185,7 @@ cat_surf_data %>%
 # pdf("plot_fig_2.pdf", width = 5, height = 5)
 ggsave("plot_fig_2.tiff", width = 5, height = 5, units = "in", dpi = 600)
 cat_m_data %>%
-  ggplot(aes(x = food_treatment, y = pest_pref_trans)) +
+  ggplot(aes(x = food_treatment, y = pest_pref)) +
   geom_jitter(width = 0.1, height = 0, alpha = 0.2) +
   stat_summary(fun.data = "mean_se") +
   theme_classic() +
