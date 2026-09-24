@@ -3,7 +3,7 @@ https://doi.org/10.5281/zenodo.20574433
 This repository contains R scripts that clean, analyze, and create figures for the manuscript "Investigating the role of experience in monarch caterpillar preference for a common insecticide" in revision at Agricultural and Forest Entomology. We fed monarch larvae either control or clothianidin-treated milkweed as their initial diet and then performed a two-choice assay.
 
 # Workflow
-Download the data files and R script in one folder/directory.
+Download the data files and R script in one folder/directory. Detailed variable descriptions are available in the attached data dictionaries.
 
 # Usage
 Analyses and figures were created using R version 4.6.1 (2026-06-24) (R Core Team 2026). For package versions see the header of monarch_preference.R
